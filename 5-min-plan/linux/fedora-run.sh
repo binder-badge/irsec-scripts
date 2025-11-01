@@ -27,11 +27,17 @@ iptables -A INPUT -p UDP --sport 53 -j ACCEPT
 iptables -A OUTPUT -p UDP --dport 53 -j ACCEPT
 
 # prompt for pw for all users
-cat /etc/passwd | cut -d ":" -f 1,3 | awk -F ":" '$2 > 1000 {print $1}' > ~/user
-read -p "Enter new pass: " answer
-while read user;do echo "$answer" | passwd --stdin $user;done < ~/user
-rm -f ~/user
-
+# cat /etc/passwd | cut -d ":" -f 1,3 | awk -F ":" '$2 > 1000 {print $1}' > ~/user
+# read -p "Enter new pass: " answer
+# while read user;do echo "$answer" | passwd --stdin $user;done < ~/user
+# rm -f ~/user
+knownUsers=()
+read -p "Enter old pass: " answer1
+read -p "Enter new pass: " answer2
+for i in "${users[@]}"
+do
+    echo $answer1 ; echo $answer2 ;echo $answer2 ;sudo passwd $user
+done
 # Change root password
 echo "$answer" | sudo passwd root --stdin
 
@@ -65,3 +71,6 @@ mv /etc/ld.so.preload /etc/ld.so.null
 touch /etc/ld.so.preload && chattr +i /etc/ld.so.preload
 
 dnf update
+
+chattr +i -R /usr/bin 2> /dev/null
+chattr +i -R /bin 2> /dev/null
