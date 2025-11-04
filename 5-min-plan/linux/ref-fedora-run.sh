@@ -163,13 +163,6 @@ mv /sbin/xtables-multi /sbin/lshkl
 # 		mv /bin/"$FILE" /bin/"$FILE"_duck
 # 	fi
 # done
-mv /bin/crontab /bin/corntab
-mv /bin/nc /bin/cn
-mv /bin/ls /bin/sl
-mv /bin/cd /bin/dc
-mv /bin/curl /bin/lruc
-mv /bin/wget /bin/tegw
-cd
 
 # Make all of the binaries immutable
 chattr +i -R /usr/bin 2> /dev/null
