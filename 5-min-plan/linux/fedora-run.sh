@@ -31,19 +31,18 @@ iptables -A OUTPUT -p UDP --dport 53 -j ACCEPT
 # read -p "Enter new pass: " answer
 # while read user;do echo "$answer" | passwd --stdin $user;done < ~/user
 # rm -f ~/user
-knownUsers=("drwho" "martymcFly" "arthurdent" "sambeckett" "loki" "riphunter" "theflash" "tonystark" "drstrange" "bartallen")
-# read -p "Enter old pass: " answer1
-read -p "Enter new pass: " answer2
-for i in "${users[@]}"
+knownUsers=("drwho" "marthymcfly" "arthurdent" "sambeckett" "loki" "riphunter" "theflash" "tonystark" "drstrange" "bartallen")
+read -p "Enter new pass: " pass
+for i in "${knownUsers[@]}"
 do
-    echo "Changing password for " $i
-    # echo $answer1 ; echo $answer2 ;echo $answer2 ;sudo passwd $user
-    echo $answer2 ;echo $answer2 ;sudo passwd $user
+    echo $pass ;passwd --stdin $user
+    echo "replaced password for " $user
 done
 # Change root password
 echo "$answer" | sudo passwd root --stdin
 
 echo "Done!"
+
 
 # Back up cronjobs, bashrc, bash history, bash logout, default vimrc,  keybinds
 filesToCheck=("/etc/profile" "/etc/crontab" "/etc/sudoers" "/etc/shadow" "/etc/group" "~/.bashrc" "~/.bash_history" "~/.bash_logout" "~/.vimrc")
@@ -62,7 +61,6 @@ bind -p > "/media/.backup/mybind"
 # cat ~/.bash_history > "/media/.backup/history.txt"
 # cat ~/.bash_logout > "/media/.backup/logout.txt"
 # cat ~/.vimrc > "/media/.backup/vimrc.txt"
-dnf update
 
 # chattr the backup dir, logs
 chattr +a -R "/media/.backup"
@@ -73,6 +71,7 @@ chattr -R +a /var/log/
 mv /etc/ld.so.preload /etc/ld.so.null
 touch /etc/ld.so.preload && chattr +i /etc/ld.so.preload
 
+dnf update
 
 chattr +i -R /usr/bin 2> /dev/null
 chattr +i -R /bin 2> /dev/null
