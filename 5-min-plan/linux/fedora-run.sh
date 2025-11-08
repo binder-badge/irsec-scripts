@@ -5,6 +5,8 @@ if [[ $UID -ne 0 ]];then
 	echo "Please run as root"
 	exit
 fi
+# first run updates
+dnf update
 
 # setup back dir
 # info about usr/bin and bin to /media/.backup
@@ -71,7 +73,6 @@ chattr -R +a /var/log/
 mv /etc/ld.so.preload /etc/ld.so.null
 touch /etc/ld.so.preload && chattr +i /etc/ld.so.preload
 
-dnf update
 
 chattr +i -R /usr/bin 2> /dev/null
 chattr +i -R /bin 2> /dev/null
